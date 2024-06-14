@@ -1,0 +1,5 @@
+region = "us-east-1"
+local_ip = ""
+ec2name ="devserver"
+ami ="ami-0069eac59d05ae12b"
+instance_type ="t2.micro"
