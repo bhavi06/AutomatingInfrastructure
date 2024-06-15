@@ -1,4 +1,4 @@
-name: 'Terraform'
+  name: 'Terraform'
 
 on:
   push:
@@ -38,9 +38,7 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.5.7
-    - name: Terraform destroy
-      run: terraform destroy -auto-approve --target aws_instance.devserver 
-
+  
       
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
