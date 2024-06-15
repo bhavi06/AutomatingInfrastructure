@@ -13,6 +13,42 @@ provider "aws" {
 }
 
 
+#Resource to create SSH Key or Private Key
+resource "tls_private_key" "demo_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+#Resource to Create Key Pair & Download Locally on Linux
+resource "aws_key_pair" "demo_key_pair" {
+  key_name   = var.key_pair_name
+  public_key = tls_private_key.demo_key.public_key_openssh
+  
+  provisioner "local-exec"{
+    command = "echo '${tls_private_key.demo_key.private_key_pem}' > ./${var.key_pair_name}.pem"
+  }
+}
+
+#Resource to Create Key Pair using Public Key
+resource "aws_key_pair" "key1" {
+  key_name   = "demo_key_1"
+  public_key = var.public_key
+}
+
+#Resource to Create Key Pair From File
+resource "aws_key_pair" "key2" {
+  key_name   = "demo_key_2"
+  public_key = file("demokey.pub")
+}
+
+#Resource to Download Key Pair on Windows
+resource "local_file" "local_key_pair" {
+  filename = "${var.key_pair_name}.pem"
+  file_permission = "0400"
+  content = tls_private_key.demo_key.private_key_pem
+}
+
+
 resource "aws_vpc" "main" {
     cidr_block = "10.0.0.0/16"
     instance_tenancy = "default"
@@ -57,9 +93,9 @@ resource "aws_route_table_association" "a" {
 }
 
 resource "aws_security_group" "nsg" {
-    vpc_id = aws_vpc.main.id
-    name = "EC2securitygroup"
-    description = "Allow inbound and outbound rule"
+  vpc_id = aws_vpc.main.id
+  name = "EC2securitygroup"
+  description = "Allow inbound and outbound rule"
   ingress {
     from_port   = 0
     to_port     = 3389
@@ -86,6 +122,8 @@ resource "aws_instance" "devserver" {
     instance_type = var.instance_type
     subnet_id = aws_subnet.subnet.id
     vpc_security_group_ids = [aws_security_group.nsg.id]
+    key_name = aws_key_pair.demo_key_pair.key_name
+
 
     user_data = <<-EOF
     #!/bin/bash
