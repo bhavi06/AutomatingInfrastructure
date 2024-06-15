@@ -108,5 +108,5 @@ resource "aws_ec2_instance" "UXCEW10PRApp01"
   EOF
 }
 
-}
+
 
