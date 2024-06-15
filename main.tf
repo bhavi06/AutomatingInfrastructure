@@ -84,8 +84,7 @@ resource "aws_security_group" "nsg" {
  
 }
 
-resource "aws_instance" "UXCEW10PRApp01" {
-    name = var.ec2name
+resource "aws_instance" "devserver" {
     ami = var.ami
     instance_type = var.instance_type
     security_groups = aws_security_group.nsg.id
