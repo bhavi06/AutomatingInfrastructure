@@ -29,17 +29,6 @@ resource "aws_key_pair" "demo_key_pair" {
   }
 }
 
-#Resource to Create Key Pair using Public Key
-resource "aws_key_pair" "key1" {
-  key_name   = "demo_key_1"
-  public_key = var.public_key
-}
-
-#Resource to Create Key Pair From File
-resource "aws_key_pair" "key2" {
-  key_name   = "demo_key_2"
-  public_key = file("demokey.pub")
-}
 
 #Resource to Download Key Pair on Windows
 resource "local_file" "local_key_pair" {
