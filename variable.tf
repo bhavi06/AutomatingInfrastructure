@@ -2,18 +2,18 @@ variable "region"{
     type = string
 }
 
-varibale "local_ip"{
+variable "local_ip"{
     type = string
 }
 
-var "ec2name" {
+variable "ec2name" {
     type = string
 }
 
-var "ami" {
+variable "ami" {
     type = string
 }
 
-var "instance_type" {
+variable "instance_type" {
     type = string
 }
