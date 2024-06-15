@@ -12,9 +12,6 @@ provider "aws" {
      region = var.region
 }
 
-data "aws_availability_zone" "availabilityzone" {
-  name = "eu-central-1a"
-}
 
 resource "aws_vpc" "main" {
     cidr_block = "10.0.0.0/16"
@@ -87,7 +84,6 @@ resource "aws_security_group" "nsg" {
 resource "aws_instance" "devserver" {
     ami = var.ami
     instance_type = var.instance_type
-    security_groups = aws_security_group.nsg.id
     subnet_id = aws_subnet.subnet.id
     user_data = <<-EOF
     #!/bin/bash
