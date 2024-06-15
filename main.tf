@@ -67,7 +67,7 @@ resource "aws_security_group" "nsg" {
     from_port   = 0
     to_port     = 3389
     protocol    = "tcp"
-    cidr_blocks = var.local_ip
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
     from_port   = 0
@@ -79,7 +79,7 @@ resource "aws_security_group" "nsg" {
     from_port   = 0
     to_port     = 8172
     protocol    = "tcp"
-    cidr_blocks = var.local_ip
+    cidr_blocks = ["0.0.0.0/0"]
   }
  
 }
