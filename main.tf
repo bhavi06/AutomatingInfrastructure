@@ -63,19 +63,19 @@ resource "aws_security_group" "nsg" {
     vpc_id = aws_vpc.main.id
     name = "EC2securitygroup"
     description = "Allow inbound and outbound rule"
-  inbound {
+  ingress {
     from_port   = 0
     to_port     = 3389
     protocol    = "tcp"
     cidr_blocks = var.local_ip
   }
-  inbound {
+  ingress {
     from_port   = 0
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  inbound {
+  ingress {
     from_port   = 0
     to_port     = 8172
     protocol    = "tcp"
@@ -84,7 +84,7 @@ resource "aws_security_group" "nsg" {
  
 }
 
-resource "aws_ec2_instance" "UXCEW10PRApp01" {
+resource "aws_instance" "UXCEW10PRApp01" {
     name = var.ec2name
     ami = var.ami
     instance_type = var.instance_type
